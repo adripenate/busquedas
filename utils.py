@@ -558,15 +558,10 @@ class RamificacionAcotacion(Queue):
 
     def extend(self, items):
         self.A.extend(items)
-        self.A.sort(key=lambda elem: elem.path_cost)
+        self.A.sort(key=lambda elem: elem.path_cost, reverse=True)
 
     def pop(self):
-        e = self.A[self.start]
-        self.start += 1
-        if self.start > 5 and self.start > len(self.A) / 2:
-            self.A = self.A[self.start:]
-            self.start = 0
-        return e
+        return self.A.pop()
 
 ## Fig: The idea is we can define things like Fig[3,10] later.
 ## Alas, it is Fig[3,10] not Fig[3.10], because that would be the same as Fig[3.1]
