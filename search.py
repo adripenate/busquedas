@@ -97,16 +97,18 @@ def graph_search(problem, fringe):
     """Search through the successors of a problem to find a goal.
     The argument fringe should be an empty queue.
     If two paths reach a state, only use the best one. [Fig. 3.18]"""
+    count = 0
     closed = {}
     fringe.append(Node(problem.initial))
     while fringe:
         node = fringe.pop()
+        count += 1
         if problem.goal_test(node.state):
-            return node
+            return node, count
         if node.state not in closed:
             closed[node.state] = True
             fringe.extend(node.expand(problem))
-    return None
+    return None, count
 
 
 def breadth_first_graph_search(problem):
@@ -121,6 +123,10 @@ def depth_first_graph_search(problem):
 def ramificacion_acotacion_search(problem):
     """Search the deepest nodes in the search tree first. [p 74]"""
     return graph_search(problem, RamificacionAcotacion())
+
+def ram_acot_subest_search(problem):
+    """Search the deepest nodes in the search tree first. [p 74]"""
+    return graph_search(problem, RamifAcotSubestimacion(problem))
 
 
 # _____________________________________________________________________________

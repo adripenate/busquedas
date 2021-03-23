@@ -1,6 +1,7 @@
 
 #______________________________________________________________________________
 # Simple Data Structures: infinity, Dict, Struct
+import math
 
 infinity = 1.0e400
 
@@ -559,6 +560,27 @@ class RamificacionAcotacion(Queue):
     def extend(self, items):
         self.A.extend(items)
         self.A.sort(key=lambda elem: elem.path_cost, reverse=True)
+
+    def pop(self):
+        return self.A.pop()
+
+
+class RamifAcotSubestimacion(Queue):
+
+    def __init__(self, problem):
+        self.A = []
+        self.start = 0
+        self.problem = problem
+
+    def append(self, item):
+        self.A.append(item)
+
+    def __len__(self):
+        return len(self.A) - self.start
+
+    def extend(self, items):
+        self.A.extend(items)
+        self.A.sort(key=lambda elem: elem.path_cost + self.problem.h(elem), reverse=True)
 
     def pop(self):
         return self.A.pop()
